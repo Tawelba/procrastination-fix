@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Procrastinating For Good | Simple 3-Step System</title>
+    <meta name="description" content="Stop losing hours on your phone without getting anything done. Learn the simple 3-step system that helps you crush distractions and finish your goals.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://procrastination-fix.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Stop Procrastinating For Good | Simple 3-Step System">
+    <meta property="og:description" content="Stop losing hours on your phone without getting anything done. Learn the simple 3-step system that helps you crush distractions and finish your goals.">
+    <meta property="og:url" content="https://procrastination-fix.com">
+    <meta property="og:image" content="https://procrastination-fix.com/og-image.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stop Procrastinating For Good | Simple 3-Step System">
+    <meta name="twitter:description" content="Stop losing hours on your phone without getting anything done.">
+    <meta name="twitter:image" content="https://procrastination-fix.com/og-image.jpg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        :root {
+            /* Light Theme Variables */
+            --bg-body: #f9fafb;
+            --bg-section-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-section-problem: #ffffff;
+            --bg-section-solution: #f3f4f6;
+            --bg-section-cta: #667eea;
+            --bg-section-footer: #1f2937;
+            --bg-card: #ffffff;
+            --bg-input: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-tertiary: #6b7280;
+            --text-footer: #9ca3af;
+            --border-color: #d1d5db;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 16px rgba(0,0,0,0.1);
+            --accent: #667eea;
+            --border-white: rgba(255,255,255,0.15);
+            --bg-overlay: rgba(0,0,0,0.5);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Variables */
+            --bg-body: #111827;
+            --bg-section-hero: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+            --bg-section-problem: #1f2937;
+            --bg-section-solution: #374151;
+            --bg-section-cta: #4c1d95;
+            --bg-section-footer: #000000;
+            --bg-card: #1f2937;
+            --bg-input: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #9ca3af;
+            --text-footer: #6b7280;
+            --border-color: #4b5563;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 16px rgba(0,0,0,0.5);
+            --accent: #818cf8;
+            --border-white: rgba(255,255,255,0.25);
+            --bg-overlay: rgba(0,0,0,0.7);
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-body);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--bg-section-hero);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: white;
+        }
+
+        .hero h2 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            color: white;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: white;
+            color: var(--accent);
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 60px 0;
+            background: var(--bg-section-problem);
+            transition: background 0.3s ease;
+        }
+
+        .problem-text {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .problem-text h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .problem-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 60px 0;
+            background: var(--bg-section-solution);
+            transition: background 0.3s ease;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--text-tertiary);
+            margin-bottom: 40px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(1fr, 280px));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .step:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .step h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: var(--bg-section-cta);
+            color: white;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .cta-section h3,
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            color: white;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.2s, background 0.3s ease;
+        }
+
+        .cta-button-primary {
+            background: white;
+            color: var(--accent);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cta-button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .cta-button-secondary {
+            background: var(--border-white);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .cta-divider {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .cta-note {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            background: var(--bg-section-footer);
+            color: var(--text-footer);
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-footer);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+            z-index: 999;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-toggle:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                width: 100%;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 40px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .steps {
+                gap: 20px;
+            }
+        }
+
+        /* Accessibility: prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-cta:hover,
+            .step:hover,
+            .cta-button-primary:hover,
+            .cta-button-secondary:hover,
+            .theme-toggle:hover {
+                transform: none;
+            }
+
+            * {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Procrastinating For Good</h1>
+            <h2>Simple 3-step system to crush distractions and finish your goals.</h2>
+            <a href="#focusmate-cta" class="hero-cta" aria-label="Start Free Trial at Focusmate">Start Free Trial →</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <div class="problem-text">
+                <h3>Does this sound familiar?</h3>
+                <p>You tell yourself you'll start your project, but suddenly it's night and you haven't done anything. You scroll through your phone for hours, feeling guilty but unable to stop.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">Here's What Changed For Me</h2>
+            <p class="section-subtitle">A simple 3-step system that actually works</p>
+
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Pick Your Top 3</h4>
+                    <p>Before each day, pick only 3 tasks that truly matter. Everything else can wait.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Set Timer + Focus Session</h4>
+                    <p>Work for 25-minute chunks. Use Focusmate to pair with someone else and stay accountable.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Review & Adjust</h4>
+                    <p>At the end of the day, review what you got done. Adjust your plan for tomorrow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="focusmate-cta">
+        <div class="container">
+            <h2>Try Focusmate Today — Free</h2>
+            <p>Focusmate pairs you with a focus partner, so you stay accountable. Start your free trial at <strong>https://www.focusmate.com</strong>.</p>
+
+            <div class="cta-buttons">
+                <a href="https://www.focusmate.com?aff=[YOUR_FOCUSMATE_ID]" target="_blank" rel="nofollow" class="cta-button cta-button-primary" aria-label="Start Free Trial at Focusmate - Virtual coworking platform">
+                    Start Free Trial at Focusmate
+                </a>
+                <p class="cta-divider">or</p>
+                <a href="https://forms.gle/Vb6N4FXY2ueTzsydA" target="_blank" class="cta-button cta-button-secondary" aria-label="Get My Free Procrastination PDF Guide - 7-day challenge">
+                    Get My Free Procrastination PDF Guide
+                </a>
+                <p class="cta-note">7-day challenge to crush procrastination</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2026 Procrastination Fix. All rights reserved.</p>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-tertiary);">
+                Affiliate disclosures: Links to Focusmate are affiliate links. We may earn a commission if you sign up.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Email Capture Form Modal -->
+    <div id="emailFormModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-overlay); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; border: 1px solid var(--border-color);">
+            <h2 id="modalTitle" style="margin-bottom: 10px; color: var(--text-primary);">Get My Free Procrastination PDF</h2>
+            <p style="color: var(--text-tertiary); margin-bottom: 20px; font-size: 0.95rem;">Enter your email and I'll send the PDF guide instantly.</p>
+            <form onsubmit="submitEmail(event)">
+                <label for="emailInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary);">Email</label>
+                <input type="email" id="emailInput" name="email" placeholder="Enter your email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; background: var(--bg-input); color: var(--text-primary);">
+                <button type="submit" class="cta-button cta-button-primary" style="width: 100%; padding: 12px; font-size: 1rem; background: white; color: var(--accent);">Send Me the PDF</button>
+            </form>
+            <button onclick="closeEmailForm()" style="margin-top: 15px; background: none; border: none; color: var(--text-tertiary); cursor: pointer; font-size: 0.9rem; padding: 8px 16px;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        // Get saved theme from localStorage or default to 'light'
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        // Theme toggle click handler
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // Update theme icon
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+            } else {
+                themeIcon.textContent = '🌙';
+            }
+        }
+
+        // Email capture modal functionality
+        function showEmailForm() {
+            const modal = document.getElementById('emailFormModal');
+            const title = document.getElementById('modalTitle');
+            title.textContent = 'Get My Free Procrastination PDF';
+            modal.style.display = 'flex';
+            document.getElementById('emailInput').focus();
+        }
+
+        function closeEmailForm() {
+            document.getElementById('emailFormModal').style.display = 'none';
+        }
+
+        function submitEmail(event) {
+            event.preventDefault();
+            const email = document.getElementById('emailInput').value.trim();
+            if (email && email.includes('@')) {
+                const googleFormsUrl = 'https://forms.gle/Vb6N4FXY2ueTzsydA';
+                window.location.href = googleFormsUrl;
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('emailFormModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeEmailForm();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEmailForm();
+            }
+        });
+    </script>
+</body>
+</html>
