@@ -37,7 +37,7 @@
             --bg-section-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --bg-section-problem: #ffffff;
             --bg-section-solution: #f3f4f6;
-            --bg-section-cta: #667eea;
+            --bg-section-cta: linear-gradient(135deg, #5b3f91 0%, #43306f 100%);
             --bg-section-footer: #1f2937;
             --bg-card: #ffffff;
             --bg-input: #ffffff;
@@ -49,6 +49,8 @@
             --shadow: 0 2px 4px rgba(0,0,0,0.05);
             --shadow-hover: 0 8px 16px rgba(0,0,0,0.1);
             --accent: #667eea;
+            --action: #c2410c;
+            --action-hover: #9a3412;
             --border-white: rgba(255,255,255,0.15);
             --bg-overlay: rgba(0,0,0,0.5);
         }
@@ -59,7 +61,7 @@
             --bg-section-hero: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
             --bg-section-problem: #1f2937;
             --bg-section-solution: #374151;
-            --bg-section-cta: #4c1d95;
+            --bg-section-cta: linear-gradient(135deg, #4c1d95 0%, #312e81 100%);
             --bg-section-footer: #000000;
             --bg-card: #1f2937;
             --bg-input: #374151;
@@ -71,6 +73,8 @@
             --shadow: 0 2px 4px rgba(0,0,0,0.3);
             --shadow-hover: 0 8px 16px rgba(0,0,0,0.5);
             --accent: #818cf8;
+            --action: #c2410c;
+            --action-hover: #9a3412;
             --border-white: rgba(255,255,255,0.25);
             --bg-overlay: rgba(0,0,0,0.7);
         }
@@ -114,21 +118,34 @@
         }
 
         .hero-cta {
-            display: inline-block;
-            background: white;
-            color: var(--accent);
-            padding: 16px 32px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--action);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 12px;
             font-weight: 600;
             text-decoration: none;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(67, 20, 7, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(67, 20, 7, 0.4);
+            background: var(--action-hover);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .hero-cta svg {
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(4px);
         }
 
         /* Problem Section */
@@ -180,7 +197,7 @@
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(1fr, 280px));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -200,7 +217,7 @@
 
         .step-number {
             display: inline-block;
-            background: var(--accent);
+            background: var(--action);
             color: white;
             width: 36px;
             height: 36px;
@@ -264,26 +281,71 @@
             transition: transform 0.2s, background 0.3s ease;
         }
 
+        /* Glass Button Base Style */
+        .glass-button {
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .glass-button:hover::before {
+            left: 100%;
+        }
+
+        /* Primary Action Button */
         .cta-button-primary {
-            background: white;
-            color: var(--accent);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: var(--action);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 24px rgba(49, 15, 5, 0.35);
         }
 
         .cta-button-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(49, 15, 5, 0.45);
+            background: var(--action-hover);
         }
 
+        .cta-button-primary:active {
+            transform: translateY(-1px);
+        }
+
+        /* Secondary Glass Button */
         .cta-button-secondary {
-            background: var(--border-white);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .cta-button-secondary:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cta-button-secondary:active {
+            transform: translateY(-1px);
         }
 
         .cta-divider {
@@ -295,6 +357,17 @@
             color: rgba(255,255,255,0.7);
             font-size: 0.8rem;
             margin-top: 10px;
+        }
+
+        .affiliate-notice {
+            width: fit-content;
+            max-width: 620px;
+            margin: 0 auto 28px !important;
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+            font-size: 0.82rem !important;
         }
 
         /* Footer */
@@ -352,14 +425,491 @@
             outline-offset: 2px;
         }
 
+        /* Polished landing-page structure */
+        .site-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            padding: 22px 0;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 750;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover { color: white; }
+
+        .nav-guide {
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            padding: 150px 0 100px;
+            text-align: left;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            align-items: center;
+            gap: 72px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 22px;
+            color: #ffedd5;
+            font-size: 0.82rem;
+            font-weight: 750;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 28px;
+            height: 2px;
+            background: #fb923c;
+        }
+
+        .hero h1 {
+            max-width: 680px;
+            font-size: clamp(2.6rem, 5vw, 4.45rem);
+            letter-spacing: -0.055em;
+            line-height: 1.02;
+            text-wrap: balance;
+        }
+
+        .hero h2 {
+            max-width: 620px;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.83);
+            font-size: 1.16rem;
+            line-height: 1.65;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-link {
+            padding: 18px 22px;
+            color: white;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .hero-note {
+            margin-top: 16px;
+            color: rgba(255,255,255,0.68);
+            font-size: 0.86rem;
+        }
+
+        .focus-preview {
+            position: relative;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 24px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 28px 80px rgba(31, 18, 67, 0.34);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            transform: rotate(1.5deg);
+        }
+
+        .preview-window {
+            overflow: hidden;
+            border-radius: 16px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .preview-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 18px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .preview-status { color: #15803d; }
+
+        .preview-body { padding: 26px; }
+
+        .preview-label {
+            color: var(--text-tertiary);
+            font-size: 0.72rem;
+            font-weight: 750;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .preview-task {
+            margin: 8px 0 22px;
+            font-size: 1.32rem;
+            font-weight: 750;
+            letter-spacing: -0.025em;
+        }
+
+        .timer-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 14px;
+            background: var(--bg-section-solution);
+        }
+
+        .timer-value {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .partner-pill {
+            padding: 9px 12px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .trust-strip {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-section-problem);
+        }
+
+        .trust-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px 44px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 650;
+        }
+
+        .trust-items span::before {
+            content: '✓';
+            margin-right: 9px;
+            color: #15803d;
+            font-weight: 800;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            align-items: center;
+            gap: 72px;
+        }
+
+        .problem-text { text-align: left; }
+
+        .problem-kicker {
+            margin-bottom: 12px;
+            color: var(--action);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .problem-signs {
+            display: grid;
+            gap: 12px;
+        }
+
+        .problem-sign {
+            padding: 18px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            box-shadow: var(--shadow);
+        }
+
+        .problem-sign strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--text-primary);
+        }
+
+        .why-section {
+            padding: 80px 0;
+            background: var(--bg-section-problem);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 38px;
+        }
+
+        .why-card {
+            padding: 26px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--bg-card);
+        }
+
+        .why-icon {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            background: #ffedd5;
+            color: #9a3412;
+            font-weight: 850;
+        }
+
+        .why-card h3 {
+            margin-bottom: 8px;
+            font-size: 1.08rem;
+        }
+
+        .why-card p { color: var(--text-secondary); }
+
+        /* Modern Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Hero Section Animations */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glass Card Effect */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            animation: fadeInUp 1s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero h2 {
+            animation: fadeInUp 1s ease-out 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 1s ease-out 0.6s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        /* Glass Overlay Effect */
+        .hero {
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.08) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Step Cards Animation */
+        .step {
+            animation: fadeInUp 0.8s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+
+        /* CTA Section Animation */
+        .cta-section {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .cta-section h2 {
+            animation: fadeInUp 1s ease-out 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .cta-section p {
+            animation: fadeInUp 1s ease-out 0.4s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .cta-buttons {
+            animation: fadeInUp 1s ease-out 0.6s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        /* Card Hover Glow Effect */
+        /* Smooth Scroll for Anchor Links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Step Number Animation */
+        .step-number {
+            animation: fadeInUp 0.6s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .step:nth-child(1) .step-number { animation-delay: 0.2s; }
+        .step:nth-child(2) .step-number { animation-delay: 0.3s; }
+        .step:nth-child(3) .step-number { animation-delay: 0.4s; }
+
+        /* Footer Animation */
+        .footer {
+            animation: fadeIn 1s ease-out 0.8s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .site-header { padding: 18px 0; }
+
+            .nav-links a:not(.nav-guide) { display: none; }
+
+            .hero {
+                padding: 120px 0 70px;
+                text-align: center;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 46px;
+            }
+
+            .hero h1,
+            .hero h2 {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .focus-preview {
+                width: min(100%, 500px);
+                margin: 0 auto;
+                transform: none;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .problem-text {
+                text-align: center;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+                line-height: 1.2;
             }
 
             .hero h2 {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
+                margin-bottom: 30px;
+                line-height: 1.5;
+            }
+
+            .hero-cta {
+                padding: 20px 32px;
+                font-size: 1rem;
             }
 
             .cta-buttons {
@@ -369,33 +919,146 @@
             .cta-button {
                 width: 100%;
                 text-align: center;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .hero {
-                padding: 40px 0;
-            }
-
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-
-            .hero h2 {
+                padding: 20px 32px;
                 font-size: 1rem;
             }
 
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .step {
+                padding: 24px;
+                margin: 0 auto;
+            }
+
+            .cta-section {
+                padding: 60px 0;
+            }
+
+            .cta-section h2,
+            .cta-section h3 {
+                font-size: 1.75rem;
+            }
+
+            .footer {
+                padding: 30px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
             .container {
                 padding: 0 16px;
             }
 
+            .hero {
+                padding: 110px 0 56px;
+            }
+
+            .hero h1 {
+                font-size: 2.35rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .hero-cta {
+                padding: 16px 24px;
+                font-size: 0.95rem;
+            }
+
+            .hero-link { width: 100%; }
+
+            .preview-body { padding: 20px; }
+
+            .timer-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .trust-items {
+                align-items: flex-start;
+                flex-direction: column;
+                padding-left: 22px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .step h4 {
+                font-size: 1.2rem;
+            }
+
             .steps {
-                gap: 20px;
+                gap: 16px;
+                padding: 0 8px;
+            }
+
+            .cta-section {
+                padding: 50px 0;
+            }
+
+            .cta-button {
+                padding: 18px 28px;
+                font-size: 0.95rem;
+            }
+
+            .footer-links a {
+                display: block;
+                margin: 8px 0;
+                padding: 8px;
+            }
+        }
+
+        /* Touch-Friendly Targets */
+        @media (hover: none) and (pointer: coarse) {
+            .cta-button,
+            .hero-cta,
+            .step {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 20px 32px;
+            }
+
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+
+            .step:active {
+                transform: scale(0.98);
             }
         }
 
         /* Accessibility: prefers-reduced-motion */
         @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+
+            .hero h1,
+            .hero h2,
+            .hero-cta,
+            .step,
+            .cta-section h2,
+            .cta-section p,
+            .cta-buttons,
+            .footer {
+                opacity: 1;
+            }
+
             .hero-cta:hover,
             .step:hover,
             .cta-button-primary:hover,
@@ -404,39 +1067,87 @@
                 transform: none;
             }
 
-            * {
-                transition: none;
-            }
         }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="#top">Procrastination Fix</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#how-it-works">How it works</a>
+                <a href="#why-it-works">Why it works</a>
+                <a class="nav-guide" href="https://forms.gle/Vb6N4FXY2ueTzsydA">Free guide</a>
+            </nav>
+        </div>
+    </header>
+
     <!-- Theme Toggle Button -->
     <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
         <span id="themeIcon">🌙</span>
     </button>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Stop Procrastinating For Good</h1>
-            <h2>Simple 3-step system to crush distractions and finish your goals.</h2>
-            <a href="#focusmate-cta" class="hero-cta" aria-label="Start Free Trial at Focusmate">Start Free Trial →</a>
+    <section class="hero" id="top">
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <p class="eyebrow">A practical system for starting</p>
+                <h1>Stop waiting to feel motivated. Start in 25 minutes.</h1>
+                <h2>Turn uncomfortable work into a clear next step, a focused session, and a small daily win—with accountability when you need it.</h2>
+                <div class="hero-actions">
+                    <a href="#focusmate-cta" class="hero-cta" aria-label="Start a focused session with Focusmate">Start a Focus Session →</a>
+                    <a href="#how-it-works" class="hero-link">See the 3-step system</a>
+                </div>
+                <p class="hero-note">Simple enough to use today. No perfect routine required.</p>
+            </div>
+            <div class="focus-preview" aria-label="Example of a focused work session">
+                <div class="preview-window">
+                    <div class="preview-topbar">
+                        <span>Today’s focus</span>
+                        <span class="preview-status">● Ready</span>
+                    </div>
+                    <div class="preview-body">
+                        <p class="preview-label">One clear next step</p>
+                        <p class="preview-task">Finish the first draft</p>
+                        <div class="timer-row">
+                            <div>
+                                <p class="preview-label">Focus timer</p>
+                                <p class="timer-value">25:00</p>
+                            </div>
+                            <span class="partner-pill">Partner joined</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <div class="trust-strip" aria-label="Key benefits">
+        <div class="container trust-items">
+            <span>Start with one clear task</span>
+            <span>Work in manageable sessions</span>
+            <span>Use real accountability</span>
+        </div>
+    </div>
+
     <!-- Problem Section -->
     <section class="problem">
-        <div class="container">
+        <div class="container problem-grid">
             <div class="problem-text">
+                <p class="problem-kicker">The real problem</p>
                 <h3>Does this sound familiar?</h3>
-                <p>You tell yourself you'll start your project, but suddenly it's night and you haven't done anything. You scroll through your phone for hours, feeling guilty but unable to stop.</p>
+                <p>Procrastination is rarely a knowledge problem. It starts when a task feels vague, uncomfortable, or too large to enter.</p>
+            </div>
+            <div class="problem-signs">
+                <div class="problem-sign"><strong>You keep preparing to start</strong>Planning, reorganising, and researching replace the work itself.</div>
+                <div class="problem-sign"><strong>Your phone becomes the escape</strong>A quick check turns into an hour because distraction feels easier.</div>
+                <div class="problem-sign"><strong>Guilt makes tomorrow harder</strong>The unfinished task carries more emotional weight into the next day.</div>
             </div>
         </div>
     </section>
 
     <!-- Solution Section -->
-    <section class="solution">
+    <section class="solution" id="how-it-works">
         <div class="container">
             <h2 class="section-title">Here's What Changed For Me</h2>
             <p class="section-subtitle">A simple 3-step system that actually works</p>
@@ -463,19 +1174,44 @@
         </div>
     </section>
 
+    <section class="why-section" id="why-it-works">
+        <div class="container">
+            <h2 class="section-title">Designed to Make Starting Easier</h2>
+            <p class="section-subtitle">The system reduces the three pressures that keep work stuck</p>
+            <div class="why-grid">
+                <article class="why-card">
+                    <span class="why-icon">01</span>
+                    <h3>Less decision friction</h3>
+                    <p>Three priorities give your attention somewhere specific to land.</p>
+                </article>
+                <article class="why-card">
+                    <span class="why-icon">02</span>
+                    <h3>A smaller commitment</h3>
+                    <p>A 25-minute session feels approachable even when the full project does not.</p>
+                </article>
+                <article class="why-card">
+                    <span class="why-icon">03</span>
+                    <h3>Visible accountability</h3>
+                    <p>A focus partner creates the gentle pressure that motivation often cannot.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta-section" id="focusmate-cta">
         <div class="container">
-            <h2>Try Focusmate Today — Free</h2>
+            <h2>Try Accountability with Focusmate — Build a Daily Habit</h2>
             <p>Focusmate pairs you with a focus partner, so you stay accountable. Start your free trial at <strong>https://www.focusmate.com</strong>.</p>
+            <p class="affiliate-notice">We may earn a commission if you join through this link, at no additional cost to you.</p>
 
             <div class="cta-buttons">
                 <a href="https://www.focusmate.com?aff=[YOUR_FOCUSMATE_ID]" target="_blank" rel="nofollow" class="cta-button cta-button-primary" aria-label="Start Free Trial at Focusmate - Virtual coworking platform">
                     Start Free Trial at Focusmate
                 </a>
                 <p class="cta-divider">or</p>
-                <a href="https://forms.gle/Vb6N4FXY2ueTzsydA" target="_blank" class="cta-button cta-button-secondary" aria-label="Get My Free Procrastination PDF Guide - 7-day challenge">
-                    Get My Free Procrastination PDF Guide
+                <a href="https://forms.gle/Vb6N4FXY2ueTzsydA" target="_blank" rel="noopener noreferrer" class="cta-button cta-button-secondary" aria-label="Get My Free Procrastination PDF Guide - 7-day challenge">
+                    Download The Free Guide
                 </a>
                 <p class="cta-note">7-day challenge to crush procrastination</p>
             </div>
@@ -496,20 +1232,6 @@
             </p>
         </div>
     </footer>
-
-    <!-- Email Capture Form Modal -->
-    <div id="emailFormModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-overlay); z-index: 1000; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; border: 1px solid var(--border-color);">
-            <h2 id="modalTitle" style="margin-bottom: 10px; color: var(--text-primary);">Get My Free Procrastination PDF</h2>
-            <p style="color: var(--text-tertiary); margin-bottom: 20px; font-size: 0.95rem;">Enter your email and I'll send the PDF guide instantly.</p>
-            <form onsubmit="submitEmail(event)">
-                <label for="emailInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary);">Email</label>
-                <input type="email" id="emailInput" name="email" placeholder="Enter your email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; background: var(--bg-input); color: var(--text-primary);">
-                <button type="submit" class="cta-button cta-button-primary" style="width: 100%; padding: 12px; font-size: 1rem; background: white; color: var(--accent);">Send Me the PDF</button>
-            </form>
-            <button onclick="closeEmailForm()" style="margin-top: 15px; background: none; border: none; color: var(--text-tertiary); cursor: pointer; font-size: 0.9rem; padding: 8px 16px;">Cancel</button>
-        </div>
-    </div>
 
     <script>
         // Theme Toggle Functionality
@@ -540,43 +1262,6 @@
             }
         }
 
-        // Email capture modal functionality
-        function showEmailForm() {
-            const modal = document.getElementById('emailFormModal');
-            const title = document.getElementById('modalTitle');
-            title.textContent = 'Get My Free Procrastination PDF';
-            modal.style.display = 'flex';
-            document.getElementById('emailInput').focus();
-        }
-
-        function closeEmailForm() {
-            document.getElementById('emailFormModal').style.display = 'none';
-        }
-
-        function submitEmail(event) {
-            event.preventDefault();
-            const email = document.getElementById('emailInput').value.trim();
-            if (email && email.includes('@')) {
-                const googleFormsUrl = 'https://forms.gle/Vb6N4FXY2ueTzsydA';
-                window.location.href = googleFormsUrl;
-            } else {
-                alert('Please enter a valid email address.');
-            }
-        }
-
-        // Close modal on outside click
-        document.getElementById('emailFormModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeEmailForm();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeEmailForm();
-            }
-        });
     </script>
 </body>
 </html>
