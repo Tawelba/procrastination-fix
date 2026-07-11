@@ -1,0 +1,14 @@
+<section class="surface py-20">
+  <div class="container-shell grid items-center gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-18">
+    <div class="text-center lg:text-left">
+      <p class="mb-3 text-xs font-extrabold uppercase tracking-widest text-action-600">The real problem</p>
+      <h2 class="section-title">Does this sound familiar?</h2>
+      <p class="section-copy mt-4">Procrastination is rarely a knowledge problem. It starts when a task feels vague, uncomfortable, or too large to enter.</p>
+    </div>
+    <div class="grid gap-3">
+      {[['You keep preparing to start','Planning, reorganising, and researching replace the work itself.'],['Your phone becomes the escape','A quick check turns into an hour because distraction feels easier.'],['Guilt makes tomorrow harder','The unfinished task carries more emotional weight into the next day.']].map(([title, copy]) => (
+        <article class="border-ui surface shadow-card rounded-2xl border p-5"><h3 class="font-extrabold">{title}</h3><p class="text-muted mt-1">{copy}</p></article>
+      ))}
+    </div>
+  </div>
+</section>

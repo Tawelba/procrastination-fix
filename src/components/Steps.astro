@@ -1,0 +1,21 @@
+---
+const steps = [
+  ['Pick Your Top 3', 'Before each day, pick only three tasks that truly matter. Everything else can wait.'],
+  ['Set Timer + Focus Session', 'Work for 25-minute chunks. Use Focusmate to pair with someone else and stay accountable.'],
+  ['Review & Adjust', 'At the end of the day, review what you finished. Adjust your plan for tomorrow.']
+];
+---
+<section class="surface-soft py-20" id="how-it-works">
+  <div class="container-shell">
+    <div class="mx-auto max-w-2xl text-center"><h2 class="section-title">A Simple System That Actually Works</h2><p class="section-copy mt-3">Reduce the task, enter a focused session, and make the next day easier.</p></div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {steps.map(([title, copy], index) => (
+        <article class="border-ui surface shadow-card rounded-2xl border p-7 hover:-translate-y-1 hover:shadow-xl">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-action-600 font-extrabold text-white">{index + 1}</span>
+          <h3 class="mt-5 text-xl font-extrabold tracking-tight">{title}</h3>
+          <p class="text-muted mt-3 leading-7">{copy}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

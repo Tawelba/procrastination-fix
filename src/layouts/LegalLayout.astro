@@ -1,0 +1,16 @@
+---
+import BaseLayout from './BaseLayout.astro';
+interface Props { title: string; description: string; effectiveDate: string; }
+const { title, description, effectiveDate } = Astro.props;
+---
+<BaseLayout title={`${title} | Procrastination Fix`} description={description}>
+  <main class="legal-content">
+    <article class="legal-card">
+      <h1>{title}</h1>
+      <p><strong>Effective date:</strong> {effectiveDate}</p>
+      <slot />
+      <p class="mt-10 border-t border-ui pt-6"><strong>Last updated:</strong> {effectiveDate}</p>
+    </article>
+    <a class="mt-6 inline-block font-bold text-brand-500" href="/">← Back to Procrastination Fix</a>
+  </main>
+</BaseLayout>
