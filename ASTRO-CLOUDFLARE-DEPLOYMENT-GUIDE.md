@@ -114,6 +114,12 @@ The committed file should remain:
   "observability": {
     "enabled": true
   },
+  "routes": [
+    {
+      "pattern": "procrastination-fix.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
