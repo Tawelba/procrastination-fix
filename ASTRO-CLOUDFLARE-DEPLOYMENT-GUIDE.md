@@ -1,59 +1,53 @@
-# Deploying the Astro Redesign to the Existing Cloudflare Pages Site
+# Deploy the Astro Redesign with Cloudflare Workers Builds
 
-This guide replaces the currently deployed root `index.html` with the Astro-generated redesign while keeping the existing production deployment available for rollback.
+This repository is connected to **Cloudflare Workers Builds**, not Cloudflare Pages. The currently live site publishes the repository root through a bot-generated Wrangler configuration. The Astro redesign must instead be built first and then publish `dist/` as static Worker assets.
 
-## What changes after the migration
+## Confirmed Worker configuration
 
-The old deployment serves files directly from the repository. The Astro deployment adds a build step:
+- Worker name: `procrastination-fix`
+- Repository: `Tawelba/procrastination-fix`
+- Root directory: `/`
+- Production build command required: `npm run build`
+- Production deploy command required: `npx wrangler deploy`
+- Astro output/assets directory: `./dist`
 
-1. Cloudflare checks out the selected GitHub commit.
-2. Cloudflare installs the packages listed in `package-lock.json`.
-3. Cloudflare runs `npm run build`.
-4. Astro writes the finished website to `dist/`.
-5. Cloudflare publishes only the contents of `dist/`.
+The repository now contains `wrangler.jsonc` with the correct Worker name and `dist` asset directory.
 
-The legacy root `index.html`, `privacy-policy.html`, and `terms.html` are therefore not published by the Astro build. They remain migration references until you choose to remove them later.
+## How the deployment works
+
+1. Workers Builds checks out the selected GitHub commit.
+2. It installs packages from `package-lock.json`.
+3. It runs `npm run build`.
+4. Astro generates the site in `dist/`.
+5. Wrangler uploads the files in `dist/` to the existing `procrastination-fix` Worker.
+6. On production, `wrangler deploy` makes that version active.
+
+The old root `index.html` is no longer published because Wrangler uploads only `dist/`. It can remain in the repository temporarily as a migration reference.
 
 ## Files that must be committed
-
-Commit these files and directories:
 
 - `.node-version`
 - `astro.config.mjs`
 - `package.json`
 - `package-lock.json`
 - `tsconfig.json`
+- `wrangler.jsonc`
 - `src/`
 - `public/`
 - `.gitignore`
 
-Do not commit these generated or local directories:
+Do not commit:
 
 - `node_modules/`
 - `dist/`
 - `.astro/`
 - `.npm-cache/`
 
-The existing `.gitignore` already excludes them.
+## Safe preview-first procedure
 
-## Recommended safe deployment sequence
+### 1. Preserve the current source version
 
-### 1. Confirm the existing production deployment
-
-Before changing anything:
-
-1. Open Cloudflare Dashboard.
-2. Go to **Workers & Pages**.
-3. Select the existing Pages project.
-4. Open **Deployments**.
-5. Confirm the current production deployment is successful.
-6. Record its commit identifier and deployment date.
-
-That successful production deployment will remain available as a rollback target.
-
-### 2. Preserve the currently working version in Git
-
-Make sure the current working static site has already been committed. Optionally create a tag before merging the redesign:
+Before merging Astro into production, optionally tag the currently working version:
 
 ```bash
 git checkout main
@@ -62,11 +56,9 @@ git tag pre-astro-production
 git push origin pre-astro-production
 ```
 
-The tag is optional because Cloudflare also retains successful production deployments, but it makes the old source version easy to identify.
+Cloudflare also retains deployed Worker versions, so the tag is an additional source-code safeguard.
 
-### 3. Put the Astro redesign on a separate branch
-
-Use a preview branch instead of pushing directly to production:
+### 2. Create an Astro preview branch
 
 ```bash
 git checkout -b astro-redesign
@@ -76,174 +68,124 @@ git commit -m "Convert landing page to Astro and Tailwind"
 git push -u origin astro-redesign
 ```
 
-Before committing, inspect `git status` and confirm that `node_modules`, `dist`, `.astro`, and `.npm-cache` are absent.
+Check `git status` before committing and confirm the excluded directories listed above are absent.
 
-### 4. Update the Cloudflare Pages build settings
+### 3. Change Workers Builds settings
 
-In Cloudflare Dashboard:
+Open Cloudflare Dashboard:
 
 1. Go to **Workers & Pages**.
-2. Select the existing Pages project.
-3. Open **Settings**.
-4. Find **Build & deployments** or **Build configurations**.
-5. Edit the production and preview build configuration.
+2. Select **procrastination-fix**.
+3. Open **Settings → Builds**.
+4. Edit the build configuration.
 
-Use these values:
+Use:
 
 | Setting | Value |
 | --- | --- |
-| Framework preset | Astro, if available |
-| Production branch | `main` or the branch currently used for production |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Root directory | Leave blank when the Astro project is at the repository root |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+| Build token | Keep `Workers Builds - 2026-07-10 22:20` |
+| Build variables | None required |
 
-The committed `.node-version` requests Node.js `22.16.0`, which satisfies Astro's runtime requirement and matches Cloudflare Pages' current v3 build environment.
-
-Do not set the output directory to `/`, `public`, or the repository root. `public/` contains source assets that Astro copies into `dist/`; it is not the finished site.
-
-### 5. Make sure preview deployments are enabled
-
-Under the project's branch deployment controls:
-
-1. Keep `main` as the production branch.
-2. Enable preview deployments for non-production branches.
-3. If custom preview branch rules are used, include `astro-redesign`.
-
-Changing the build settings does not replace the currently successful production deployment by itself. Production changes only when a new production deployment succeeds or you manually promote another deployment.
-
-### 6. Trigger and inspect the Astro preview
-
-After pushing `astro-redesign`, Cloudflare should create a preview deployment. Open **Deployments** and select the preview build.
-
-A successful log should show these broad stages:
-
-- Git repository cloned
-- Node version selected
-- Dependencies installed
-- `npm run build` executed
-- Astro generated the static routes
-- `dist` uploaded
-
-Cloudflare will provide a URL similar to:
+If Cloudflare provides a separate **non-production branch deploy command**, use:
 
 ```text
-https://astro-redesign.your-project.pages.dev
+npx wrangler versions upload
 ```
 
-or a hash-based preview URL.
+This distinction is important:
 
-Test all of the following on the preview:
+- `wrangler deploy` creates and activates a production deployment.
+- `wrangler versions upload` creates a preview version without replacing production.
 
-- Homepage loads without a blank screen or missing styles.
-- Desktop and mobile layouts are readable.
-- Header links scroll to the correct sections.
-- Dark-mode button works and persists after refresh.
-- The three step cards remain visible when hovered.
-- Free-guide buttons open the correct Google Form.
-- The affiliate disclosure is visible beside the CTA.
-- The Focusmate placeholder link is not treated as final until the real ID is available.
-- `/privacy-policy/` loads.
-- `/terms/` loads.
-- A nonexistent address shows the custom 404 page.
-- `/og-image.jpg` and `/pdf-guide.pdf` load.
-- The browser console contains no errors.
+If the dashboard shows only one deploy-command field and it is currently `versions upload`, change the production command to `npx wrangler deploy` before the final production push.
 
-Cloudflare normally adds `X-Robots-Tag: noindex` to preview deployments, preventing duplicate preview content from entering search results.
+### 4. Verify the Wrangler configuration
 
-### 7. Promote the redesign to production
+The committed file should remain:
 
-The safest method is a pull request:
+```jsonc
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "procrastination-fix",
+  "compatibility_date": "2026-07-11",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}
+```
 
-1. Open a GitHub pull request from `astro-redesign` into `main`.
-2. Confirm the Cloudflare preview check succeeds.
-3. Review the preview once more.
-4. Merge the pull request.
+Do not restore the bot's original `"directory": "."`; that would publish the source repository rather than the Astro build.
 
-When the merge commit reaches the connected production branch, Cloudflare automatically starts a production build. The currently live site continues serving until the new build succeeds. Once successful, Cloudflare atomically switches the production domain to the Astro output.
+### 5. Trigger the preview build
 
-Your existing custom domain and DNS records should not need to change because the same Pages project remains connected to the domain.
+Push the `astro-redesign` branch after saving the Cloudflare settings. Open the resulting build under the Worker's deployment/version history.
 
-### 8. Verify the production deployment
+A successful build should show:
 
-After Cloudflare reports success:
+- Dependencies installed
+- `npm run build` completed
+- Four Astro routes generated
+- Assets read from `dist`
+- A preview version uploaded
 
-1. Open the `pages.dev` production URL.
-2. Open the custom domain.
-3. Perform a hard refresh or use a private browser window.
-4. Test the same routes and interactions used for the preview.
-5. Confirm the deployment details show the expected Git commit.
+Open the preview URL and test:
 
-Cloudflare may cache assets, but new Astro builds use hashed CSS filenames, which normally prevents visitors from receiving an old stylesheet.
-
-## Rollback procedure
-
-If the production redesign has a serious problem:
-
-1. Open **Workers & Pages** in Cloudflare.
-2. Select the project.
-3. Open **Deployments** and then **All deployments**.
-4. Find the last successful production deployment from before the Astro migration.
-5. Open its three-dot actions menu.
-6. Select **Rollback to this deployment** and confirm.
-
-Cloudflare will immediately point production back to that successful deployment. Preview deployments cannot be selected as rollback targets.
-
-After rollback, fix the problem on `astro-redesign`, push another preview, test it, and merge only after it passes.
-
-## Common failure messages
-
-### Cloudflare publishes the old `index.html`
-
-Cause: the project still has no build command or publishes the repository root.
-
-Fix:
-
-- Build command: `npm run build`
-- Output directory: `dist`
-
-### Build succeeds but the site returns 404
-
-Cause: the output directory is incorrect.
-
-Fix: set it to `dist`, without pointing it to `src`, `public`, or the repository root.
-
-### `astro: command not found`
-
-Cause: dependencies were not installed or `package.json`/`package-lock.json` was not committed.
-
-Fix: commit both package files and allow Cloudflare's normal dependency-install step to run.
-
-### Unsupported Node version
-
-Cause: an older Cloudflare build image or a conflicting `NODE_VERSION` environment variable is selected.
-
-Fix:
-
-- Use Cloudflare Pages build image v3.
-- Remove an obsolete `NODE_VERSION` override, or set it to `22.16.0` or another version supported by Astro.
-- Keep `.node-version` committed.
-
-### CSS is missing
-
-Cause: Cloudflare is publishing the wrong directory, or a stale HTML page is being served instead of Astro's build.
-
-Fix: verify the published directory is `dist` and inspect the deployment commit.
-
-### Privacy policy or terms return 404
-
-Use the Astro routes with trailing-slash-compatible paths:
-
+- Homepage and responsive styling
+- Dark-mode toggle and refresh persistence
+- Header anchor links
+- Step-card hover behavior
+- Google Form links
+- Affiliate disclosure
 - `/privacy-policy/`
 - `/terms/`
+- Custom 404 behavior
+- `/og-image.jpg`
+- `/pdf-guide.pdf`
 
-The footer already links to these routes.
+Do not treat the Focusmate placeholder as final until the real affiliate ID is added.
 
-### Cloudflare build fails after a package update
+### 6. Deploy to production
 
-Do not delete `package-lock.json`. It pins the dependency versions tested locally. Run the local checks, commit the updated lockfile, and retry the preview deployment.
+After preview testing:
 
-## Local checks before future deployments
+1. Open a pull request from `astro-redesign` into `main`.
+2. Confirm the preview build is successful.
+3. Merge the pull request.
+4. Confirm the `main` build uses `npx wrangler deploy`.
+5. Wait for the new version to become the Active Deployment.
+
+The existing custom domain should remain attached because the Worker name is unchanged.
+
+## Production verification
+
+After deployment:
+
+1. Open both the `workers.dev` URL and the custom domain.
+2. Use a private window or hard refresh.
+3. Test all preview checklist items again.
+4. Confirm the active deployment references the expected Git commit.
+5. Confirm Cloudflare uploaded `dist`, not the repository root.
+
+## Rollback
+
+If the redesign has a serious production issue:
+
+1. Open the `procrastination-fix` Worker.
+2. Go to **Deployments** or **Version History**.
+3. Select the previously active working version.
+4. Use the rollback/deploy option to make it active again.
+
+Then fix the Astro branch, create another preview version, test it, and redeploy.
+
+## Local verification for future releases
 
 Run:
 
@@ -251,17 +193,48 @@ Run:
 npm install
 npm run check
 npm run build
+npx wrangler deploy --dry-run
 ```
 
-A valid build creates these routes in `dist/`:
+Expected Astro routes:
 
-- `/index.html`
-- `/privacy-policy/index.html`
-- `/terms/index.html`
-- `/404.html`
+- `dist/index.html`
+- `dist/privacy-policy/index.html`
+- `dist/terms/index.html`
+- `dist/404.html`
+
+The Wrangler dry run should report that it read assets from the project's `dist` directory and then exit without deploying.
+
+## Troubleshooting
+
+### The old page is still served
+
+Check that the new Git commit became the Active Deployment. If the build used `wrangler versions upload`, it created a version but did not activate it.
+
+### Cloudflare uploads source files
+
+Check `wrangler.jsonc`. The assets directory must be `./dist`, not `.`.
+
+### Build succeeds but deployment fails with a Worker-name error
+
+The Wrangler name must exactly match `procrastination-fix`.
+
+### `dist` does not exist
+
+The build command is missing or failed. Set it to `npm run build` and inspect the Astro error earlier in the build log.
+
+### Astro or Wrangler command not found
+
+Confirm `package.json` and `package-lock.json` were committed and that dependency installation completed.
+
+### Wrong Node version
+
+Keep `.node-version` committed. It requests Node `22.16.0`, which satisfies the installed Astro version.
+
+### Legal routes return 404
+
+Use `/privacy-policy/` and `/terms/`. The `auto-trailing-slash` asset setting maps these to the generated folder index files.
 
 ## After the migration is stable
 
-Once the Astro production deployment has been stable for several days, you may remove the legacy root HTML files in a separate, reviewed commit. They do not currently interfere with Astro because Cloudflare publishes only `dist/`, so removing them is optional and should not be combined with the first production migration.
-
-Keep the pre-Astro Git tag and Cloudflare deployment history until you are confident the redesign is stable.
+After several days of successful production operation, the legacy root HTML files may be removed in a separate commit. They do not interfere while Wrangler is configured to publish only `dist/`.
