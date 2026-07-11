@@ -1,15 +1,9 @@
-const fs = require('fs');
+import fs from 'node:fs';
 
 const createOgImage = () => {
     // Create canvas data
     const width = 1200;
     const height = 630;
-
-    // Create gradient
-    const gradient = {
-        0: '#667eea',
-        1: '#764ba2'
-    };
 
     // SVG as string
     const svg = `
