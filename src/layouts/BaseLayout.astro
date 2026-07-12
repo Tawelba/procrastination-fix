@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 
 interface Props {
   title: string;
@@ -31,23 +32,41 @@ const canonicalUrl = new URL(canonical, Astro.site ?? Astro.url.origin);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site ?? Astro.url.origin)} />
     <script is:inline>
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') document.documentElement.dataset.theme = 'dark';
+      const savedTheme = localStorage.getItem('theme') || 'system';
+      const initialTheme = savedTheme === 'system'
+        ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : savedTheme;
+      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.dataset.themeChoice = savedTheme;
     </script>
   </head>
   <body>
     <slot />
+    <ThemeSwitcher />
     <script is:inline>
-      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const themeMedia = matchMedia('(prefers-color-scheme: dark)');
+      const themeButtons = document.querySelectorAll('[data-theme-value]');
+
+      const applyTheme = (choice, save = true) => {
         const root = document.documentElement;
-        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-        root.dataset.theme = next;
-        localStorage.setItem('theme', next);
-        const icon = document.querySelector('[data-theme-icon]');
-        if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+        const resolved = choice === 'system' ? (themeMedia.matches ? 'dark' : 'light') : choice;
+        root.dataset.theme = resolved;
+        root.dataset.themeChoice = choice;
+        if (save) localStorage.setItem('theme', choice);
+        themeButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.themeValue === choice));
+        });
+      };
+
+      themeButtons.forEach((button) => {
+        button.addEventListener('click', () => applyTheme(button.dataset.themeValue));
       });
-      const icon = document.querySelector('[data-theme-icon]');
-      if (icon) icon.textContent = document.documentElement.dataset.theme === 'dark' ? '☀️' : '🌙';
+
+      themeMedia.addEventListener('change', () => {
+        if ((localStorage.getItem('theme') || 'system') === 'system') applyTheme('system', false);
+      });
+
+      applyTheme(localStorage.getItem('theme') || 'system', false);
     </script>
   </body>
 </html>
