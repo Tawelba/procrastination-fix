@@ -59,7 +59,7 @@ a, button { transition: color .2s, background-color .2s, border-color .2s, trans
 .theme-switcher {
   position: fixed;
   right: 20px;
-  top: 86px;
+  top: 15px;
   z-index: 40;
   display: grid;
   grid-template-columns: repeat(3, 48px);
@@ -137,8 +137,8 @@ a, button { transition: color .2s, background-color .2s, border-color .2s, trans
 
 @media (max-width: 720px) {
   .container-shell { width: min(100% - 32px, 1120px); }
-  .theme-switcher { right: 12px; top: 78px; grid-template-columns: repeat(3, 44px); }
-  .theme-choice { width: 44px; height: 44px; }
+  .theme-switcher { right: 12px; top: 11px; grid-template-columns: repeat(3, 40px); padding: 5px; border-radius: 16px; }
+  .theme-choice { width: 40px; height: 40px; border-radius: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
