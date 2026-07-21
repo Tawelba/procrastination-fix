@@ -37,36 +37,32 @@ const canonicalUrl = new URL(canonical, Astro.site ?? Astro.url.origin);
         ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
         : savedTheme;
       document.documentElement.dataset.theme = initialTheme;
-      document.documentElement.dataset.themeChoice = savedTheme;
     </script>
   </head>
   <body>
     <slot />
     <ThemeSwitcher />
     <script is:inline>
-      const themeMedia = matchMedia('(prefers-color-scheme: dark)');
-      const themeButtons = document.querySelectorAll('[data-theme-value]');
+      const themeToggle = document.querySelector('[data-theme-toggle]');
 
-      const applyTheme = (choice, save = true) => {
+      const applyTheme = (theme, save = true) => {
         const root = document.documentElement;
-        const resolved = choice === 'system' ? (themeMedia.matches ? 'dark' : 'light') : choice;
-        root.dataset.theme = resolved;
-        root.dataset.themeChoice = choice;
-        if (save) localStorage.setItem('theme', choice);
-        themeButtons.forEach((button) => {
-          button.setAttribute('aria-pressed', String(button.dataset.themeValue === choice));
-        });
+        const icon = themeToggle?.querySelector('.theme-toggle-icon');
+        const label = themeToggle?.querySelector('.theme-toggle-label');
+        const nextTheme = theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = theme;
+        if (save) localStorage.setItem('theme', theme);
+        if (icon) icon.textContent = theme === 'dark' ? '☾' : '☀';
+        if (label) label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+        themeToggle?.setAttribute('aria-label', `Switch to ${nextTheme} color mode`);
+        themeToggle?.setAttribute('title', `Switch to ${nextTheme} color mode`);
       };
 
-      themeButtons.forEach((button) => {
-        button.addEventListener('click', () => applyTheme(button.dataset.themeValue));
+      themeToggle?.addEventListener('click', () => {
+        applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
       });
 
-      themeMedia.addEventListener('change', () => {
-        if ((localStorage.getItem('theme') || 'system') === 'system') applyTheme('system', false);
-      });
-
-      applyTheme(localStorage.getItem('theme') || 'system', false);
+      applyTheme(document.documentElement.dataset.theme || 'light', false);
     </script>
   </body>
 </html>

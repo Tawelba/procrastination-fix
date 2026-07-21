@@ -56,76 +56,30 @@ a, button { transition: color .2s, background-color .2s, border-color .2s, trans
 .action-button:hover { background: #9a3412; transform: translateY(-2px); box-shadow: 0 14px 34px rgba(67, 20, 7, .35); }
 .focus-ring:focus-visible { outline: 3px solid #fb923c; outline-offset: 3px; }
 
-.theme-switcher {
+.theme-toggle {
   position: fixed;
   right: 20px;
   top: 15px;
   z-index: 40;
-  display: grid;
-  grid-template-columns: repeat(3, 48px);
-  gap: 4px;
-  padding: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 7px 11px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 999px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
+  color: var(--ink);
   box-shadow: 0 14px 40px rgba(15, 23, 42, .18);
   backdrop-filter: blur(14px);
-}
-
-.theme-choice {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid transparent;
-  border-radius: 14px;
-  background: transparent;
-  color: var(--subtle);
   cursor: pointer;
   font: inherit;
+  font-size: 12px;
+  font-weight: 800;
 }
 
-.theme-choice:hover { background: var(--surface-soft); color: var(--ink); }
-
-.theme-choice[aria-pressed="true"] {
-  border-color: color-mix(in srgb, #ea580c 38%, transparent);
-  background: color-mix(in srgb, #fb923c 15%, var(--surface));
-  color: #ea580c;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fb923c 9%, transparent);
-}
-
-.sun-icon, .moon-icon { font-size: 25px; line-height: 1; }
-.moon-icon { display: inline-block; transform: rotate(-25deg); font-size: 29px; }
-
-.device-icon {
-  position: relative;
-  display: block;
-  width: 24px;
-  height: 17px;
-  border: 2px solid currentColor;
-  border-radius: 3px;
-}
-
-.device-icon::before {
-  content: '';
-  position: absolute;
-  left: 9px;
-  bottom: -6px;
-  width: 2px;
-  height: 5px;
-  background: currentColor;
-}
-
-.device-icon::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  bottom: -8px;
-  width: 10px;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-}
+.theme-toggle:hover { background: var(--surface-soft); transform: translateY(-1px); }
+.theme-toggle-icon { width: 18px; font-size: 18px; line-height: 1; text-align: center; }
 
 .legal-content { width: min(820px, calc(100% - 40px)); margin: 0 auto; padding: 56px 0 80px; }
 .legal-card { padding: clamp(24px, 5vw, 48px); border: 1px solid var(--border); border-radius: 20px; background: var(--surface); box-shadow: 0 15px 45px rgba(15,23,42,.08); }
@@ -137,8 +91,7 @@ a, button { transition: color .2s, background-color .2s, border-color .2s, trans
 
 @media (max-width: 720px) {
   .container-shell { width: min(100% - 32px, 1120px); }
-  .theme-switcher { right: 12px; top: 11px; grid-template-columns: repeat(3, 40px); padding: 5px; border-radius: 16px; }
-  .theme-choice { width: 40px; height: 40px; border-radius: 12px; }
+  .theme-toggle { right: 12px; top: 11px; min-height: 36px; padding: 6px 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
