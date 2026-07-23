@@ -11,14 +11,18 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/mdx": "latest",
-    "@tailwindcss/vite": "latest",
-    "astro": "latest",
-    "tailwindcss": "latest"
+    "@astrojs/mdx": "^7.0.2",
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^7.1.3",
+    "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@astrojs/check": "latest",
-    "typescript": "latest",
-    "wrangler": "latest"
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.110.0"
+  },
+  "overrides": {
+    "fast-uri": "3.1.4",
+    "sharp": "0.35.3"
   }
 }

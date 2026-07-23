@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "procrastination-fix",
-  "compatibility_date": "2026-07-11",
+  "compatibility_date": "2026-07-23",
+  "workers_dev": false,
   "observability": {
     "enabled": true
   },
